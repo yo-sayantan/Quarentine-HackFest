@@ -9,6 +9,7 @@ db = SQLAlchemy(app)
 class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String(200), nullable=False)
+    time = db.Column(db.String(200), nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
@@ -19,10 +20,13 @@ class Todo(db.Model):
 def index():
     if request.method == 'POST':
         task_content = request.form['content']
+        task_time = request.form['time']
         new_task = Todo(content=task_content)
+        new_task1 = Todo(time=task_time)
 
         try:
             db.session.add(new_task)
+            db.session.add(new_task1)
             db.session.commit()
             return redirect('/')
         except:
@@ -44,7 +48,7 @@ def delete(id):
     except:
         return 'There was a problem deleting that task'
 
-@app.route('/update/<int:id>', methods=['GET', 'POST'])
+"""@app.route('/update/<int:id>', methods=['GET', 'POST'])
 def update(id):
     task = Todo.query.get_or_404(id)
 
@@ -59,7 +63,7 @@ def update(id):
 
     else:
         return render_template('update.html', task=task)
-
+"""
 
 if __name__ == "__main__":
     app.run(debug=True)
