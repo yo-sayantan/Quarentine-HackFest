@@ -6,29 +6,30 @@
 
 {% block body %}
 <div class="content">
-    <h1 style="text-align: center">Task Master</h1>
+    <h1 style="text-align: center">Park Finder</h1>
     {% if tasks|length < 1 %}
-    <h4 style="text-align: center">There are no tasks. Create one below!</h4>
+    <h4 style="text-align: center">There are no parkings. Create one below!</h4>
     {% else %}
     <table>
         <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Time (hr)</th>
             <th>Added</th>
-            <th>Actions</th>
+            <th>Time</th>
+            <th>Booking Status</th>
+            <th>Location</th>
         </tr>
         {% for task in tasks %}
             <tr>
-            	 <td>{{ task.id }}</td>
+                <td>{{ task.id }}</td>
                 <td>{{ task.content }}</td>
-                <td>{{ task.time }}</td>
                 <td>{{ task.date_created.date() }}</td>
+                <td></td>
                 <td>
-                    <a href="/delete/{{task.id}}">Delete</a>
-                    <br>
                     <a href="/update/{{task.id}}">Update</a>
+                    <a href="/delete/{{task.id}}">Delete</a>
                 </td>
+                <td></td>
             </tr>
         {% endfor %}
     </table>
@@ -36,9 +37,8 @@
 
     <div class="form">
         <form action="/" method="POST">
-            <input type="text" name="content" id="content">
-            <input type="text" name="time" id="time">
-            <br>
+            <input type="text" name="content">
+            
             <input type="submit" value="Add Task">
         </form>
     </div>
